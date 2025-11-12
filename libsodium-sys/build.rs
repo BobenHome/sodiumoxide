@@ -213,6 +213,12 @@ fn make_libsodium(target: &str, source_dir: &Path, install_dir: &Path) -> PathBu
                 cflags += &format!(" -mios-simulator-version-min={}", ios_simulator_version_min);
                 host_arg = "--host=x86_64-apple-darwin10".to_string();
             }
+            "aarch64-apple-ios-sim" => {
+                cflags += " -arch arm64";
+                cflags += &format!(" -isysroot {sdk_dir_simulator}");
+                cflags += &format!(" -mios-simulator-version-min={ios_simulator_version_min}");
+                host_arg = "--host=aarch64-apple-darwin23".to_string();
+            }
             _ => panic!("Unknown iOS build target: {}", target),
         }
         cross_compiling = true;
